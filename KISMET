@@ -1,0 +1,22 @@
+#!/bin/bash
+apt-get update;apt-get upgrade -y
+sudo apt-get install build-essential git libmicrohttpd-dev pkg-config zlib1g-dev libnl-3-dev libnl-genl-3-dev libcap-dev libpcap-dev libncurses5-dev libnm-dev libdw-dev libsqlite3-dev libprotobuf-dev libprotobuf-c-dev protobuf-compiler protobuf-c-compiler libsensors4-dev libusb-1.0.0-dev -y
+sudo apt-get install build-essential git libmicrohttpd-dev pkg-config zlib1g-dev libnl-3-dev libnl-genl-3-dev libcap-dev libpcap-dev libncurses5-dev libnm-dev libdw-dev libsqlite3-dev libprotobuf-dev libprotobuf-c-dev protobuf-compiler protobuf-c-compiler libsensors4-dev libusb-1.0.0-dev -y
+sudo apt-get install build-essential cmake libusb-1.0-0-dev pkg-config libfftw3-dev -y
+cd /opt
+git clone https://github.com/mossmann/hackrf.git
+cd /opt/hackrf
+mkdir host/build
+cd host/build
+cmake ..
+make
+sudo make install
+sudo ldconfig
+cd /opt
+git clone https://www.kismetwireless.net/git/kismet.git
+cd /opt/kismet
+./configure
+make -j6   #Note j number is number of CPUs
+make suidinstall
+usermod -a -G kismet adminuser
+kismet
